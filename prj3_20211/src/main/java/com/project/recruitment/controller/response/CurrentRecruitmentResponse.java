@@ -6,4 +6,13 @@ import lombok.Data;
 @Data
 public class CurrentRecruitmentResponse extends GeneralResponse {
     private Recruitment recruitment;
+
+    public Recruitment getRecruitment() {
+        return recruitment;
+    }
+
+    public void setRecruitment(Recruitment recruitment) {
+        this.recruitment = recruitment;
+    }
+    
 }

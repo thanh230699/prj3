@@ -24,7 +24,7 @@ import Avatar from '@mui/material/Avatar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 
-import Account from './options/Table'
+import Account from './options/Account'
 
 const drawerWidth = 240;
 
@@ -145,10 +145,15 @@ export default function Home() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const handleLogout = () => {
+        localStorage.removeItem("role");
+        window.location.assign("/signin")
+    };
+    
     return (
         <Box sx={{ display: 'flex', background: '#f2f2f2'}}>
                 <CssBaseline />
-            <AppBar position="fixed" open={open} style={{
+                <AppBar position="fixed" open={open} style={{
                 background: '#6164e8',
                 color: '#ffffff'
  }} >
@@ -178,7 +183,7 @@ export default function Home() {
                                     onClick={handleMenu}
                                     color="inherit"
                                 >
-                                    <Avatar>V</Avatar>
+                                    <Avatar>A</Avatar>
                                 </IconButton>
                                 <Menu
                                     id="menu-appbar"
@@ -196,7 +201,7 @@ export default function Home() {
                                     onClose={handleClose}
                                 >
                                     <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                                    <MenuItem onClick={handleLogout}>Log out</MenuItem>
                                 </Menu>
                             </div>
                         )}
@@ -222,7 +227,7 @@ export default function Home() {
 
             
                 </Drawer>
-           
+
 
                 <Account />
 

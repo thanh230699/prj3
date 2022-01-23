@@ -1,9 +1,6 @@
 package com.project.recruitment.constant;
 
-/**
- * @author : Hoang Cuong
- * @since : 2019-09-07, Sat
- **/
+
 public class MessageConstant {
     private MessageConstant() {
     	super();

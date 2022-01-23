@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,8 +13,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
 
 function Copyright(props) {
+    
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
@@ -25,20 +29,51 @@ function Copyright(props) {
         </Typography>
     );
 }
-
 const theme = createTheme();
+export default function SignIn({setRole}) {
+    const [username, setUsername] = useState('');
+    const [ pass, setPass] = useState('');
+    const navigate = useNavigate();
 
-export default function SignIn() {
     const handleSubmit = (event) => {
-        event.preventDefault();
+        
+                event.preventDefault();
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+        axios({
+            method:'post',
+            url:'/account/login',
+            data: {
+                username: username,
+                password: pass,
+            }
+        })
+        .then((Response)=>{
+
+            setRole(Response.data.role)
+            if(Response.data.result == true) {
+                if(Response.data.role == 1) {
+                    window.location.assign("home_qtv")
+                }else if ( Response.data.role == 2) {
+                    window.location.assign("home_btd/uv")
+                }
+            }
+        })
+        .catch((error)=>{
+            console.log(error);
         });
+   
+        
+      
     };
 
+  const changeUsername = (e) => {
+    setUsername(e.target.value);
+  }
+const changePass = (e) => {
+    setPass(e.target.value);
+}
+    
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
@@ -56,17 +91,19 @@ export default function SignIn() {
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
+                
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
+                            id="username"
                             label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            name="username"
+                            autoComplete="username"
                             autoFocus
+                            onChange={(e) => {changeUsername(e)}}
                         />
                         <TextField
                             margin="normal"
@@ -77,6 +114,7 @@ export default function SignIn() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={(e)=> {changePass(e)}}
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
@@ -97,8 +135,8 @@ export default function SignIn() {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2" href='/signup'>
-                                    {"Don't have an account? Sign Up"}
+                                <Link href="#" variant="body2">
+                                    {"Don't have an account? "}
                                 </Link>
                             </Grid>
                         </Grid>
@@ -108,4 +146,6 @@ export default function SignIn() {
             </Container>
         </ThemeProvider>
     );
-}
+
+
+};

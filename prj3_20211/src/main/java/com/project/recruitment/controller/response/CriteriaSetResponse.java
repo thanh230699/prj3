@@ -8,4 +8,14 @@ import java.util.List;
 @Data
 public class CriteriaSetResponse extends GeneralResponse{
     List<CriteriaSet> data;
+
+    public List<CriteriaSet> getData() {
+        return data;
+    }
+
+    public void setData(List<CriteriaSet> data) {
+        this.data = data;
+    }
+
+    
 }

@@ -22,14 +22,13 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import BookIcon from '@mui/icons-material/Book';
-import ClassIcon from '@mui/icons-material/Class';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 
-//components
-import Account from './options/Account'
+import {Outlet, useNavigate} from 'react-router-dom';
+
+
 
 const drawerWidth = 240;
 
@@ -120,11 +119,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Home() {
     const theme = useTheme();
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [role, setRole] = useState(0)
     const classes = useStyles();
+
+    const changeTable = (url) => {
+        navigate(url);
+    }
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -150,6 +154,12 @@ export default function Home() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleLogout = () => {
+        localStorage.removeItem("role");
+        window.location.assign("/signin")
+    };
+
     return (
         <Box sx={{ display: 'flex', background: '#f2f2f2'}}>
                 <CssBaseline />
@@ -201,7 +211,7 @@ export default function Home() {
                                     onClose={handleClose}
                                 >
                                     <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                                    <MenuItem onClick={handleLogout}>Log out</MenuItem>
                                 </Menu>
                             </div>
                         )}
@@ -215,17 +225,21 @@ export default function Home() {
                     </DrawerHeader>
                     <Divider />
 
-                <List >
+                <List onClick={() => {
+                    changeTable('/home_btd/uv')
+                }}>
                         <ListItem button key="0"  >
                             <ListItemIcon>
-                                <MailIcon />
+                            <MailIcon />
                             </ListItemIcon>
                             <ListItemText primary="Hồ sơ ứng viên" />
                         </ListItem>
                         <Divider />
                     </List>
 
-                <List >
+                <List onClick={() => {
+                    changeTable('/home_btd/tc')
+                }}>
                         <ListItem button key="1"  >
                             <ListItemIcon>
                                 <AccountBoxIcon />
@@ -234,7 +248,9 @@ export default function Home() {
                         </ListItem>
                         <Divider />
                     </List>
-                <List >
+                <List onClick={() => {
+                    changeTable('/home_btd/td')
+                }}>
                         <ListItem button key="2"  >
                             <ListItemIcon>
                                 <BookIcon />
@@ -243,21 +259,16 @@ export default function Home() {
                         </ListItem>
                         <Divider />
                     </List>
-               
-                <List >
-                        <ListItem button key="4"  >
-                            <ListItemIcon>
-                                <ClassIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Đợt tuyển dụng" />
-                        </ListItem>
-                        <Divider />
-                    </List>
-                <List >
+            
+                 
+                <List   onClick={() => {
+                    changeTable('/home_btd/ds')
+                }}>
                         <ListItem button key="5" >
                             <ListItemIcon>
                                 <ShoppingBasketIcon />
                             </ListItemIcon>
+                        
                             <ListItemText primary="Danh sách trúng tuyển" />
                         </ListItem>
                         <Divider />
@@ -265,10 +276,19 @@ export default function Home() {
                 </Drawer>
            
 
-                <Account />
+           <Outlet/> 
 
                    
  
         </Box>
+        /* (lỉne 247) <List >
+                        <ListItem button key="4"  >
+                            <ListItemIcon>
+                                <ClassIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Đợt tuyển dụng" />
+                        </ListItem>
+                        <Divider />
+                    </List> */
     )
 }

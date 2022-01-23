@@ -12,3 +12,4 @@ public interface AccountService {
     UpdateAccountResponse update(Account account);
     UpdateAccountResponse delete(Integer id);
 }
+

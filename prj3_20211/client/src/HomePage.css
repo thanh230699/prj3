@@ -1,0 +1,30 @@
+.topnav {
+    overflow: hidden;
+    background-color: white;
+    position: fixed;
+    right: 0;
+    left : 0 ;
+}
+
+/* Style the topnav links */
+.topnav a {
+    float: right;
+    display: block;
+    color: #282c34;
+    text-align: center;
+    font-weight: bold;
+    padding: 17px 18px;
+    text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.topnav img {
+    width: 100px;
+    height: 50px;
+}
+
